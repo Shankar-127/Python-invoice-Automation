@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}New invoice · Invoice Desk{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">CREATE</p><h1>New invoice</h1><p class="muted">Enter customer details and add one or more line items.</p></div></div>
+<form method="post" class="panel form-panel" id="invoice-form">
+<h2>Customer details</h2><div class="form-grid"><label>Customer / business name *<input name="customer_name" required placeholder="Acme Pvt. Ltd."></label><label>Email<input type="email" name="customer_email" placeholder="accounts@example.com"></label><label>Phone<input name="customer_phone" placeholder="+91 98765 43210"></label><label>Invoice date<input type="date" name="invoice_date" value="{{ today }}" required></label><label class="wide">Billing address<textarea name="customer_address" rows="2" placeholder="Street, city, state, PIN"></textarea></label></div>
+<div class="section-head item-heading"><h2>Invoice items</h2><button type="button" class="btn secondary small" id="add-row">＋ Add item</button></div>
+<div class="table-wrap"><table class="items-table"><thead><tr><th>Description *</th><th>Qty</th><th>Unit price (₹)</th><th>Amount</th><th></th></tr></thead><tbody id="items">
+<tr class="item-row"><td><input name="description[]" required placeholder="Product or service"></td><td><input name="quantity[]" type="number" min="0.01" step="0.01" value="1" required></td><td><input name="unit_price[]" type="number" min="0" step="0.01" value="0" required></td><td class="line-total">₹0.00</td><td><button type="button" class="remove-row" aria-label="Remove item">×</button></td></tr>
+</tbody></table></div>
+<div class="totals"><label>Tax / GST rate (%)<input id="tax-rate" name="tax_rate" type="number" min="0" max="100" step="0.01" value="0"></label><div class="total-lines"><div><span>Subtotal</span><strong id="subtotal">₹0.00</strong></div><div><span>Tax</span><strong id="tax-amount">₹0.00</strong></div><div class="grand"><span>Total</span><strong id="grand-total">₹0.00</strong></div></div></div>
+<label class="notes-label">Notes / payment terms<textarea name="notes" rows="3" placeholder="Payment due within 15 days..."></textarea></label>
+<div class="form-actions"><a class="btn secondary" href="{{ url_for('index') }}">Cancel</a><button class="btn" type="submit">Generate & save invoice</button></div></form>
+<script src="{{ url_for('static', filename='app.js') }}"></script>{% endblock %}
